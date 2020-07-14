@@ -1,0 +1,83 @@
+﻿@page "/login"
+@using System.Net
+@using System.Net.Http
+@inject HttpClient Http
+@inject NotificationService NotificationService
+
+<h3>Simple login</h3>
+<div class="row  align-content-center">
+    <div class="col-md-12 d-flex justify-content-center">
+        <RadzenCard>
+            <RadzenLogin Login="@((args) => LoginUser(args, "Login with register and password reset"))"
+                         ResetPassword="@((args) => ResetPassword(args, "Login with register and password reset"))"
+                         Register="@((args) => Register("Login with register and password reset"))" Style="margin-bottom: 20px;" />
+        </RadzenCard>
+    </div>
+</div>
+
+
+@code {
+    string userName = "admin";
+    string password = "admin";
+    TodoItem[] todoItems;
+
+    public class UserForLoginDto
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
+
+    public class MyClass
+    {
+        public string token { get; set; }
+    }
+
+    UserForLoginDto dto = new UserForLoginDto();
+
+    Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
+
+    private async Task LoginUser(LoginArgs args, string name)
+    {
+        dto.Username = args.Username;
+        dto.Password = args.Password;
+        events.Add(DateTime.Now, $"{name} -> E-mail: {args.Username} and password: {args.Password}");
+        var response = await Http.PostAsJsonAsync("https://localhost:44375/api/auth/login", dto);
+
+        if (response.StatusCode == HttpStatusCode.Unauthorized)
+        {
+            await ShowNotification(new NotificationMessage() { Severity = NotificationSeverity.Error, Summary = "Error Summary", Detail = "Error Detail", Duration = 4000 });
+        }
+        else
+        {
+            var content = await response.Content.ReadAsStringAsync();
+
+            await ShowNotification(new NotificationMessage() {Severity = NotificationSeverity.Success, Summary = "Success Summary", Detail = $"Success Detail: {content}", Duration = 4000});
+
+        }
+
+
+
+        StateHasChanged();
+    }
+
+    void Register(string name)
+    {
+        events.Add(DateTime.Now, $"{name} -> Register");
+        StateHasChanged();
+    }
+
+    void ResetPassword(string value, string name)
+    {
+        events.Add(DateTime.Now, $"{name} -> ResetPassword for user: {value}");
+        StateHasChanged();
+    }
+
+    async Task ShowNotification(NotificationMessage message)
+    {
+        NotificationService.Notify(message);
+
+        events.Add(DateTime.Now, $"{message.Severity} notification");
+        await InvokeAsync(() => { StateHasChanged(); });
+    }
+
+}
