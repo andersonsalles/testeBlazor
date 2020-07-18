@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Radzen;
+using testeBlazor.Services;
 
 namespace testeBlazor
 {
@@ -22,12 +23,16 @@ namespace testeBlazor
 
             builder.Services.AddScoped<DialogService>();
             builder.Services.AddScoped<NotificationService>();
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddSingleton<HttpClient>();
 
-            builder.Services.AddTransient(sp =>
-                new HttpClient
-                {
-                    BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
-                });
+            //builder.Services.AddTransient(sp =>
+            //    new HttpClient
+            //    {
+            //        BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+            //    });
+            builder.Services.AddHttpClient<UserService>(client =>
+                client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress));
 
             await builder.Build().RunAsync();
         }

@@ -3,6 +3,7 @@
 @using System.Net.Http
 @inject HttpClient Http
 @inject NotificationService NotificationService
+@inject NavigationManager NavigationManager
 
 <h3>Simple login</h3>
 <div class="row  align-content-center">
@@ -10,7 +11,7 @@
         <RadzenCard>
             <RadzenLogin Login="@((args) => LoginUser(args, "Login with register and password reset"))"
                          ResetPassword="@((args) => ResetPassword(args, "Login with register and password reset"))"
-                         Register="@((args) => Register("Login with register and password reset"))" Style="margin-bottom: 20px;" />
+                         Register="@((args) => Register())" Style="margin-bottom: 20px;" />
         </RadzenCard>
     </div>
 </div>
@@ -51,7 +52,7 @@
         {
             var content = await response.Content.ReadAsStringAsync();
 
-            await ShowNotification(new NotificationMessage() {Severity = NotificationSeverity.Success, Summary = "Success Summary", Detail = $"Success Detail: {content}", Duration = 4000});
+            await ShowNotification(new NotificationMessage() { Severity = NotificationSeverity.Success, Summary = "Success Summary", Detail = $"Success Detail: {content}", Duration = 4000 });
 
         }
 
@@ -60,10 +61,10 @@
         StateHasChanged();
     }
 
-    void Register(string name)
+    void Register()
     {
-        events.Add(DateTime.Now, $"{name} -> Register");
-        StateHasChanged();
+
+        NavigationManager.NavigateTo("/signup");
     }
 
     void ResetPassword(string value, string name)
