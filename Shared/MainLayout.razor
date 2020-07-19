@@ -1,4 +1,7 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.Authorization
+@using testeBlazor.Models
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div class="sidebar">
     <NavMenu />
@@ -6,8 +9,16 @@
 
 <div class="main">
     <div class="top-row px-4">
-        <a href="/">Login</a>
-    </div>
+        <AuthorizeView>
+            <Authorized>
+                <a href="/" @onclick="(() => Logout())">Logout</a>
+            </Authorized>
+            <NotAuthorized>
+                <a href="/">Login</a>
+            </NotAuthorized>
+        </AuthorizeView>
+            
+</div>
 
     <div class="content px-4">
         @Body
@@ -15,3 +26,11 @@
 </div>
 <RadzenDialog />
 <RadzenNotification />
+
+@code
+{
+    public void Logout()
+    {
+        ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsLogOut();
+    }
+}
