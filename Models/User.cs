@@ -8,7 +8,6 @@ namespace testeBlazor.Models
 {
     public class User
     {
-
         [Required]
         [EmailAddress]
         public string Username { get; set; }
