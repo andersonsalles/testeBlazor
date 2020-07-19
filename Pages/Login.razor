@@ -1,20 +1,20 @@
-﻿@page "/login"
+﻿@page "/"
 @using System.Net
 @using System.Net.Http
+@using Microsoft.AspNetCore.Components.Authorization
 @using testeBlazor.Models
 @using testeBlazor.Services
 @inject HttpClient Http
 @inject NotificationService NotificationService
 @inject NavigationManager NavigationManager
 @inject IUserService userService
+@inject AuthenticationStateProvider AuthenticationStateProvider
 <h3>Simple login</h3>
 <div class="row  align-content-center">
     <div class="col-md-12 d-flex justify-content-center">
-        <RadzenCard>
-            <RadzenLogin Login="@((args) => LoginUser(args))"
-                         ResetPassword="@((args) => ResetPassword(args, "Login with register and password reset"))"
-                         Register="@((args) => Register())" Style="margin-bottom: 20px;" />
-        </RadzenCard>
+        <RadzenLogin Login="@((args) => LoginUser(args))"
+                     ResetPassword="@((args) => ResetPassword(args, "Login with register and password reset"))"
+                     Register="@((args) => Register())" Style="margin-bottom: 20px;" />
     </div>
 </div>
 
@@ -52,7 +52,7 @@
 
         var returnedUser = await userService.LoginAsync(user);
 
-        
+
 
         if (string.IsNullOrEmpty(returnedUser))
         {
@@ -62,6 +62,8 @@
         {
 
             await ShowNotification(new NotificationMessage() { Severity = NotificationSeverity.Success, Summary = "Success Summary", Detail = $"Success Detail: {returnedUser}", Duration = 4000 });
+            NavigationManager.NavigateTo("/index");
+            ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(returnedUser);
 
         }
 

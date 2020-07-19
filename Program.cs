@@ -3,11 +3,13 @@ using System.Net.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Radzen;
+using testeBlazor.Models;
 using testeBlazor.Services;
 
 namespace testeBlazor
@@ -25,6 +27,9 @@ namespace testeBlazor
             builder.Services.AddScoped<NotificationService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddSingleton<HttpClient>();
+            builder.Services.AddOptions();
+            builder.Services.AddAuthorizationCore();
+            builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 
             //builder.Services.AddTransient(sp =>
             //    new HttpClient
