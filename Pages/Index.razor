@@ -1,6 +1,7 @@
 ﻿@page "/index"
 @using Microsoft.AspNetCore.Components.Authorization
 @using testeBlazor.Models
+
 <h1>Hello, world!</h1>
 
 <p>Welcome to your new app.</p>
@@ -8,6 +9,7 @@
 <AuthorizeView>
     <Authorized>
         <p>Welcome, @context.User.Identity.Name</p>
+        <Counter></Counter>
     </Authorized>
     <NotAuthorized>
         <p>UnAuthorized</p>

@@ -12,6 +12,7 @@
         <AuthorizeView>
             <Authorized>
                 <a href="/" @onclick="(() => Logout())">Logout</a>
+                <a><ProfileMenu></ProfileMenu></a>
             </Authorized>
             <NotAuthorized>
                 <a href="/">Login</a>

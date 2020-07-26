@@ -6,25 +6,29 @@
 <h3>Signup</h3>
 
 <EditForm Model="@user" OnValidSubmit="@RegisterUser">
+    <DataAnnotationsValidator />  
     <div>
         <br /><br /><br /><br /><br />
     </div>
     <div>
-        <h3 style="font-weight:bold; color:purple">Book Stores Register</h3>
+        <h3 style="font-weight: bold; color: purple">Book Stores Register</h3>
     </div>
     <div>
         <br />
     </div>
     <div class="col-12 row">
         <input class="form-control col-12" @bind="user.Username" placeholder="email address" />
+        <ValidationMessage For="@(() => user.Username)" />
     </div>
     <br />
     <div class="col-12 row">
-        <input type="password" class="form-control col-12" @bind="user.Password" placeholder="password" />
+        <input type="password" name="Password" class="form-control col-12" @bind="user.Password" placeholder="password" />
+        <ValidationMessage For="@(() => user.Password)" />
     </div>
     <br />
     <div class="col-12 row">
-        <input type="password" class="form-control col-12" @bind="user.ConfirmPassword" placeholder="confirm password" />
+        <input type="password"  name="Password2" class="form-control col-12" @bind="user.ConfirmPassword" placeholder="confirm password"/>
+        <ValidationMessage For="@(() => user.ConfirmPassword)" />
     </div>
     <br />
     <div class="col-12 row">
@@ -33,7 +37,7 @@
         <a href="/" class="col-6">Already an user?</a>
     </div>
     <br />
-    <div class="col-12 row" style="text-align:left; font-weight:bold">
+    <div class="col-12 row" style="text-align: left; font-weight: bold">
         <span class="col-12">@LoginMesssage</span>
     </div>
 </EditForm>

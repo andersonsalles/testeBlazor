@@ -58,7 +58,7 @@
 
         if (string.IsNullOrEmpty(returnedUser))
         {
-            await ShowNotification(new NotificationMessage() { Severity = NotificationSeverity.Error, Summary = "Error Summary", Detail = "Error Detail", Duration = 4000 });
+            await ShowNotification(new NotificationMessage() { Severity = NotificationSeverity.Error, Summary = "Error Summary", Detail = "The username or password is incorrect.", Duration = 4000 });
         }
         else
         {
