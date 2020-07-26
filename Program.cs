@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
 using Blazored.SessionStorage;
+using Blazored.Toast;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -31,6 +32,7 @@ namespace testeBlazor
             builder.Services.AddBlazoredSessionStorage();
             builder.Services.AddBlazoredSessionStorage(config =>
                 config.JsonSerializerOptions.WriteIndented = true);
+            builder.Services.AddBlazoredToast();
 
             //builder.Services.AddTransient(sp =>
             //    new HttpClient

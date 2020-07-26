@@ -9,6 +9,7 @@
 @inject IUserService userService
 @inject AuthenticationStateProvider AuthenticationStateProvider
 @inject Blazored.SessionStorage.ISessionStorageService sessionStorage
+@inject IToastService toastService
 
 <h3>Simple login</h3>
 <div class="row  align-content-center">
@@ -40,15 +41,15 @@
             <span class="col-12">@LoginMesssage</span>
         </div>
     </EditForm>
-    
-    
-    
-    
-    
-    
-    
 
-   
+
+
+
+
+
+
+
+
 </div>
 
 
@@ -85,6 +86,7 @@
 
         if (string.IsNullOrEmpty(returnedUser))
         {
+            toastService.ShowError("Invalid username or password");
             LoginMesssage = "Invalid username or password";
         }
         else

@@ -2,10 +2,11 @@
 @using testeBlazor.Models
 @using testeBlazor.Services
 @inject IUserService userService
+@inject IToastService toastService
 <h3>Signup</h3>
 
 <EditForm Model="@user" OnValidSubmit="@RegisterUser">
-    <DataAnnotationsValidator />  
+    <DataAnnotationsValidator />
     <div>
         <br /><br /><br /><br /><br />
     </div>
@@ -26,7 +27,7 @@
     </div>
     <br />
     <div class="col-12 row">
-        <input type="password"  name="Password2" class="form-control col-12" @bind="user.ConfirmPassword" placeholder="confirm password"/>
+        <input type="password" name="Password2" class="form-control col-12" @bind="user.ConfirmPassword" placeholder="confirm password" />
         <ValidationMessage For="@(() => user.ConfirmPassword)" />
     </div>
     <br />
@@ -56,6 +57,7 @@
         var returnedUser = await userService.RegisterUserAsync(user);
         if (returnedUser == null)
         {
+            toastService.ShowError("You must choose another e-mail");
             LoginMesssage = "You must choose another e-mail";
         }
         else
