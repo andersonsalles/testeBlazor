@@ -5,7 +5,6 @@
 @using testeBlazor.Models
 @using testeBlazor.Services
 @inject HttpClient Http
-@inject NotificationService NotificationService
 @inject NavigationManager NavigationManager
 @inject IUserService userService
 @inject AuthenticationStateProvider AuthenticationStateProvider
@@ -13,18 +12,48 @@
 
 <h3>Simple login</h3>
 <div class="row  align-content-center">
-    <div class="col-md-12 d-flex justify-content-center">
-        <RadzenLogin Login="@((args) => LoginUser(args))"
-                     ResetPassword="@((args) => ResetPassword(args, "Login with register and password reset"))"
-                     Register="@((args) => Register())" Style="margin-bottom: 20px;" />
-    </div>
+    <EditForm Model="@user" OnValidSubmit="@LoginUser">
+        <div>
+            <br /><br /><br /><br /><br />
+        </div>
+        <div>
+            <h3 style="font-weight:bold; color:purple">Book Stores Login</h3>
+        </div>
+        <div>
+            <br />
+        </div>
+        <div class="col-12 row">
+            <input class="form-control col-12" @bind="user.Username" placeholder="email address" />
+        </div>
+        <br />
+        <div class="col-12 row">
+            <input type="password" class="form-control col-12" @bind="user.Password" placeholder="password" />
+        </div>
+        <br />
+        <div class="col-12 row">
+            <span class="col-12"></span>
+            <input type="submit" class="form-control col-6 btn btn-primary" value="Login" />
+            <a href="/signup" class="col-3">Sign up</a>
+        </div>
+        <br />
+        <div class="col-12 row" style="text-align:left; font-weight:bold">
+            <span class="col-12">@LoginMesssage</span>
+        </div>
+    </EditForm>
+    
+    
+    
+    
+    
+    
+    
+
+   
 </div>
 
 
 @code {
-    string userName = "admin";
-    string password = "admin";
-    TodoItem[] todoItems;
+    public string LoginMesssage { get; set; }
     private User user;
 
     protected override Task OnInitializedAsync()
@@ -47,10 +76,8 @@
 
     Dictionary<DateTime, string> events = new Dictionary<DateTime, string>();
 
-    private async Task LoginUser(LoginArgs args)
+    private async Task LoginUser()
     {
-        user.Username = args.Username;
-        user.Password = args.Password;
 
         var returnedUser = await userService.LoginAsync(user);
 
@@ -58,12 +85,11 @@
 
         if (string.IsNullOrEmpty(returnedUser))
         {
-            await ShowNotification(new NotificationMessage() { Severity = NotificationSeverity.Error, Summary = "Error Summary", Detail = "The username or password is incorrect.", Duration = 4000 });
+            LoginMesssage = "Invalid username or password";
         }
         else
         {
 
-            await ShowNotification(new NotificationMessage() { Severity = NotificationSeverity.Success, Summary = "Success Summary", Detail = $"Success Detail: {returnedUser}", Duration = 4000 });
             NavigationManager.NavigateTo("/index");
             ((CustomAuthenticationStateProvider)AuthenticationStateProvider).MarkUserAsAuthenticated(returnedUser);
             await sessionStorage.SetItemAsync("token", returnedUser);
@@ -77,20 +103,6 @@
     {
 
         NavigationManager.NavigateTo("/signup");
-    }
-
-    void ResetPassword(string value, string name)
-    {
-        events.Add(DateTime.Now, $"{name} -> ResetPassword for user: {value}");
-        StateHasChanged();
-    }
-
-    async Task ShowNotification(NotificationMessage message)
-    {
-        NotificationService.Notify(message);
-
-        events.Add(DateTime.Now, $"{message.Severity} notification");
-        await InvokeAsync(() => { StateHasChanged(); });
     }
 
 }

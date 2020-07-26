@@ -1,7 +1,6 @@
 ﻿@page "/signup"
 @using testeBlazor.Models
 @using testeBlazor.Services
-@inject NotificationService NotificationService
 @inject IUserService userService
 <h3>Signup</h3>
 
@@ -57,7 +56,6 @@
         var returnedUser = await userService.RegisterUserAsync(user);
         if (returnedUser == null)
         {
-            await ShowNotification(new NotificationMessage() { Severity = NotificationSeverity.Error, Summary = "Signup Error", Detail = "E-mail already exists!", Duration = 4000 });
             LoginMesssage = "You must choose another e-mail";
         }
         else
@@ -67,13 +65,6 @@
 
 
         return true;
-    }
-
-    async Task ShowNotification(NotificationMessage message)
-    {
-        NotificationService.Notify(message);
-
-        await InvokeAsync(() => { StateHasChanged(); });
     }
 
 }

@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Radzen;
 using testeBlazor.Models;
 using testeBlazor.Services;
 
@@ -24,8 +23,6 @@ namespace testeBlazor
 
             builder.Services.AddTransient(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-            builder.Services.AddScoped<DialogService>();
-            builder.Services.AddScoped<NotificationService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddSingleton<HttpClient>();
             builder.Services.AddOptions();
