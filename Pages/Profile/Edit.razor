@@ -1,7 +1,145 @@
 ﻿@page "/profile/edit"
 
 <h3>Edit</h3>
+<EditForm Model="@FormData" OnValidSubmit="@CreateOrEditUser">
+    <div class="row col-md-12">
+        <div class="col-md-4">
+            <div class="card border-primary mr-3">
+                <div class="card-header">Personal data</div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm" for="inputSmall">Full Name</label>
+                        <InputText @bind-Value=FormData.SomeStringProperty class="form-control form-control-sm" type="text" placeholder=".form-control-sm" id="inputSmall"/>
+                    </div>
 
-@code {
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm" for="inputSmall">Small input</label>
+                        <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" id="inputSmall">
+                    </div>
 
-}
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm" for="inputSmall">Small input</label>
+                        <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" id="inputSmall">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm" for="inputSmall">Small input</label>
+                        <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" id="inputSmall">
+                    </div>
+
+                    <div class="form-group">
+                        <select class="custom-select">
+                            <option selected="">Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-md-4">
+            <div class="card border-primary mr-3">
+                <div class="card-header">Address</div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm" for="inputSmall">Small input</label>
+                        <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" id="inputSmall">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm" for="inputSmall">Small input</label>
+                        <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" id="inputSmall">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm" for="inputSmall">Small input</label>
+                        <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" id="inputSmall">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm" for="inputSmall">Small input</label>
+                        <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" id="inputSmall">
+                    </div>
+
+                    <div class="form-group">
+                        <select class="custom-select">
+                            <option selected="">Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-md-4">
+            <div class="card border-primary mr-3">
+                <div class="card-header">Photo</div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm" for="inputSmall">Small input</label>
+                        <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" id="inputSmall">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm" for="inputSmall">Small input</label>
+                        <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" id="inputSmall">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm" for="inputSmall">Small input</label>
+                        <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" id="inputSmall">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-form-label col-form-label-sm" for="inputSmall">Small input</label>
+                        <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" id="inputSmall">
+                    </div>
+
+                    <div class="form-group">
+                        <select class="custom-select">
+                            <option selected="">Open this select menu</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</EditForm>
+   
+
+    @code
+{
+        SomeModel FormData = new SomeModel();
+        class SomeModel
+        {
+            public bool SomeBooleanProperty { get; set; }
+            public DateTime? SomeDateTimeProperty { get; set; }
+            public int SomeIntegerProperty { get; set; }
+            public decimal SomeDecimalProperty { get; set; }
+            public string SomeStringProperty { get; set; }
+            public string SomeMultiLineStringProperty { get; set; }
+            public SomeStateEnum SomeSelectProperty { get; set; } = SomeStateEnum.Active;
+        }
+        public enum SomeStateEnum
+        {
+            Pending,
+            Active,
+            Suspended
+        }
+
+        private void CreateOrEditUser()
+        {
+
+        }
+    }
