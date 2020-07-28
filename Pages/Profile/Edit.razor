@@ -3,7 +3,7 @@
 <h3>Edit</h3>
 <EditForm Model="@FormData" OnValidSubmit="@CreateOrEditUser">
     <div class="row col-md-12">
-        <div class="col-md-4">
+        <div class="col-md-4 @vis1">
             <div class="card border-primary mr-3">
                 <div class="card-header">Personal data</div>
                 <div class="card-body">
@@ -40,7 +40,7 @@
 
 
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 @vis2">
             <div class="card border-primary mr-3">
                 <div class="card-header">Address</div>
                 <div class="card-body">
@@ -102,11 +102,10 @@
                     </div>
 
                     <div class="form-group">
-                        <select class="custom-select">
-                            <option selected="">Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select class="custom-select" @onchange="ShowRightPersonMenu">
+                            <option selected="">Choose the account type</option>
+                            <option value="1">Corporation</option>
+                            <option value="2">Individual</option>
                         </select>
                     </div>
                 </div>
@@ -121,6 +120,8 @@
     @code
 {
         SomeModel FormData = new SomeModel();
+        private string vis2 { get; set; } = "d-none";
+        private string vis1 { get; set; }
         class SomeModel
         {
             public bool SomeBooleanProperty { get; set; }
@@ -141,5 +142,22 @@
         private void CreateOrEditUser()
         {
 
+        }
+
+        private void ShowRightPersonMenu(ChangeEventArgs e)
+        {
+            var selectedString = e.Value.ToString();
+            if (selectedString == "1")
+            {
+                vis1 = null;
+                vis2 = "d-none";
+
+            }
+            else
+            {
+                vis2 = null;
+                vis1 = "d-none";
+            }
+            StateHasChanged();
         }
     }
